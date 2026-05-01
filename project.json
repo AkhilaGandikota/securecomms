@@ -1,0 +1,24 @@
+{
+  "overview": "An intelligent secure communication platform where messages and files can only be viewed once by the intended recipient. Features behavior-based access control with anomaly detection, encrypted storage, auto-expiring links, and a full admin dashboard with access logs.",
+  "features": [
+    "One-time message access — auto-deletes after viewing",
+    "Time-based expiration for messages and links",
+    "Behavior-based access control with anomaly detection",
+    "Secure unique link generation for each message",
+    "File uploads with type and size restrictions (images/PDFs, max 5MB)",
+    "Access log tracking (time, device fingerprint, IP simulation)",
+    "In-app notifications for recipients",
+    "Admin dashboard with full audit trail",
+    "Internet Identity authentication"
+  ],
+  "category": "security",
+  "tags": [
+    "secure-messaging",
+    "encryption",
+    "one-time-access",
+    "behavior-analytics",
+    "access-control",
+    "admin-dashboard"
+  ],
+  "last_updated": "2026-05-01T08:44:40.827Z"
+}

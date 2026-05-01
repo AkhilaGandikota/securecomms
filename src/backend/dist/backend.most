@@ -1,0 +1,103 @@
+// Version: 1.0.0
+type AccessLog__839067749 =
+  {
+    accessorId : Principal;
+    action : Text;
+    deviceFingerprint : Text;
+    id : Text;
+    messageId : Text;
+    timestamp : Int
+  };
+type BehaviorProfile__587855606 =
+  {
+    accessAttempts : Nat;
+    deviceFingerprints : [Text];
+    flagReason : ?Text;
+    flaggedAttempts : Nat;
+    isFlagged : Bool;
+    lastAccessTime : Int;
+    userId : Principal
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type ExternalBlob__671167343 = Blob;
+type FileAttachment__624907392 =
+  {
+    blob : ExternalBlob__671167343;
+    fileName : Text;
+    fileSize : Nat;
+    fileType : Text;
+    storageId : Text
+  };
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Notification__424116312 =
+  {
+    createdAt : Int;
+    id : Text;
+    isRead : Bool;
+    message : Text;
+    messageId : Text;
+    recipientId : Principal
+  };
+type SecureMessage__566516972 =
+  {
+    accessToken : Text;
+    contentKey : Text;
+    createdAt : Int;
+    encryptedContent : Text;
+    expiresAt : Int;
+    fileAttachment : ?FileAttachment__624907392;
+    id : Text;
+    isExpired : Bool;
+    isViewed : Bool;
+    notified : Bool;
+    recipientId : Principal;
+    senderId : Principal;
+    viewedAt : ?Int
+  };
+type UserRole__1073662873 = {#admin; #guest; #user};
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1073662873>
+    };
+  stable accessLogs :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?AccessLog__839067749]];
+      var elementIndex : Nat__490723111
+    };
+  stable behaviorProfiles :
+    {
+      var root : Node__46230540<Principal, BehaviorProfile__587855606>;
+      var size : Nat__490723111
+    };
+  stable idCounter : {var value : Nat};
+  stable messagesById :
+    {
+      var root : Node__46230540<Text, SecureMessage__566516972>;
+      var size : Nat__490723111
+    };
+  stable messagesByToken :
+    {
+      var root : Node__46230540<Text, SecureMessage__566516972>;
+      var size : Nat__490723111
+    };
+  stable notifications :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Notification__424116312]];
+      var elementIndex : Nat__490723111
+    }
+};

@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: "Plus Jakarta Sans";
+    --font-body: "Plus Jakarta Sans";
+    --font-mono: "JetBrains Mono";
+    --radius: 0.25rem;
+
+    --background: 0.98 0 0;
+    --foreground: 0.12 0 0;
+    --card: 0.96 0 0;
+    --card-foreground: 0.15 0 0;
+    --popover: 0.95 0 0;
+    --popover-foreground: 0.12 0 0;
+
+    --primary: 0.62 0.17 197;
+    --primary-foreground: 0.98 0 0;
+
+    --secondary: 0.68 0.09 258;
+    --secondary-foreground: 0.12 0 0;
+    --muted: 0.9 0 0;
+    --muted-foreground: 0.45 0 0;
+
+    --accent: 0.67 0.19 177;
+    --accent-foreground: 0.98 0 0;
+
+    --destructive: 0.58 0.21 24;
+    --destructive-foreground: 0.98 0 0;
+
+    --warning: 0.72 0.18 75;
+    --warning-foreground: 0.12 0 0;
+
+    --border: 0.88 0 0;
+    --input: 0.92 0 0;
+    --ring: 0.62 0.17 197;
+
+    --chart-1: 0.67 0.19 177;
+    --chart-2: 0.62 0.17 197;
+    --chart-3: 0.58 0.21 24;
+    --chart-4: 0.68 0.09 258;
+    --chart-5: 0.72 0.14 145;
+
+    --sidebar: 0.96 0 0;
+    --sidebar-foreground: 0.12 0 0;
+    --sidebar-primary: 0.62 0.17 197;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.9 0 0;
+    --sidebar-accent-foreground: 0.25 0 0;
+    --sidebar-border: 0.88 0 0;
+    --sidebar-ring: 0.62 0.17 197;
+  }
+
+  .dark {
+    --background: 0.1 0 0;
+    --foreground: 0.92 0 0;
+    --card: 0.14 0 0;
+    --card-foreground: 0.92 0 0;
+    --popover: 0.18 0 0;
+    --popover-foreground: 0.92 0 0;
+
+    --primary: 0.67 0.19 177;
+    --primary-foreground: 0.1 0 0;
+
+    --secondary: 0.24 0.08 258;
+    --secondary-foreground: 0.85 0 0;
+    --muted: 0.24 0 0;
+    --muted-foreground: 0.52 0 0;
+
+    --accent: 0.67 0.19 177;
+    --accent-foreground: 0.1 0 0;
+
+    --destructive: 0.65 0.19 22;
+    --destructive-foreground: 0.1 0 0;
+
+    --warning: 0.78 0.17 80;
+    --warning-foreground: 0.1 0 0;
+
+    --border: 0.22 0 0;
+    --input: 0.22 0 0;
+    --ring: 0.67 0.19 177;
+
+    --chart-1: 0.67 0.19 177;
+    --chart-2: 0.62 0.17 197;
+    --chart-3: 0.58 0.21 24;
+    --chart-4: 0.68 0.09 258;
+    --chart-5: 0.72 0.14 145;
+
+    --sidebar: 0.14 0 0;
+    --sidebar-foreground: 0.92 0 0;
+    --sidebar-primary: 0.67 0.19 177;
+    --sidebar-primary-foreground: 0.1 0 0;
+    --sidebar-accent: 0.24 0 0;
+    --sidebar-accent-foreground: 0.85 0 0;
+    --sidebar-border: 0.22 0 0;
+    --sidebar-ring: 0.67 0.19 177;
+  }
+
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply dark;
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .state-active {
+    @apply border-l-4 border-primary;
+  }
+
+  .state-expired {
+    @apply border-l-4 border-muted-foreground;
+  }
+
+  .state-viewed {
+    @apply border-l-4 border-secondary;
+  }
+
+  .state-flagged {
+    @apply border-l-4 border-destructive;
+  }
+
+  .badge-security {
+    @apply inline-block px-2 py-1 text-xs font-mono rounded-sm bg-accent/10 text-accent border border-accent/30;
+  }
+}

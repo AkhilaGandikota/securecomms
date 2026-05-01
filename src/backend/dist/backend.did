@@ -1,0 +1,145 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type Result_6 = 
+ variant {
+   err: text;
+   ok: MessageView;
+ };
+type Result_5 = 
+ variant {
+   err: text;
+   ok: vec MessageSummary;
+ };
+type Result_4 = 
+ variant {
+   err: text;
+   ok: vec BehaviorProfile;
+ };
+type Result_3 = 
+ variant {
+   err: text;
+   ok: vec AccessLog;
+ };
+type Result_2 = 
+ variant {
+   err: text;
+   ok: BehaviorProfile;
+ };
+type Result_1 = 
+ variant {
+   err: text;
+   ok: bool;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok: text;
+ };
+type Notification = 
+ record {
+   createdAt: int;
+   id: text;
+   isRead: bool;
+   message: text;
+   messageId: text;
+   recipientId: principal;
+ };
+type MessageView = 
+ record {
+   accessedAt: int;
+   contentKey: text;
+   encryptedContent: text;
+   fileAttachment: opt FileAttachment;
+   id: text;
+   senderId: principal;
+ };
+type MessageSummary = 
+ record {
+   accessToken: text;
+   createdAt: int;
+   expiresAt: int;
+   hasAttachment: bool;
+   id: text;
+   isExpired: bool;
+   isViewed: bool;
+   recipientId: principal;
+   senderId: principal;
+   viewedAt: opt int;
+ };
+type FileAttachment = 
+ record {
+   "blob": ExternalBlob;
+   fileName: text;
+   fileSize: nat;
+   fileType: text;
+   storageId: text;
+ };
+type ExternalBlob = blob;
+type BehaviorProfile = 
+ record {
+   accessAttempts: nat;
+   deviceFingerprints: vec text;
+   flagReason: opt text;
+   flaggedAttempts: nat;
+   isFlagged: bool;
+   lastAccessTime: int;
+   userId: principal;
+ };
+type AccessLog = 
+ record {
+   accessorId: principal;
+   action: text;
+   deviceFingerprint: text;
+   id: text;
+   messageId: text;
+   timestamp: int;
+ };
+service : {
+  /// Monotonic counter for generating unique IDs and tokens
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  /// Secondary index: messageId -> SecureMessage
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initializeAccessControl: () -> ();
+  accessMessage: (accessToken: text, deviceFingerprint: text) -> (Result_6);
+  adminGetAllAccessLogs: () -> (Result_3) query;
+  adminGetAllMessages: () -> (Result_5) query;
+  adminGetFlaggedUsers: () -> (Result_4) query;
+  adminSetAdminPrincipal: (newAdmin: principal) -> (Result_1);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  deleteExpiredMessages: () -> (nat);
+  getAccessLogs: (messageId: text) -> (Result_3) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getMyBehaviorProfile: () -> (Result_2) query;
+  getMyInbox: () -> (vec MessageSummary) query;
+  getMyNotifications: () -> (vec Notification) query;
+  getMySentMessages: () -> (vec MessageSummary) query;
+  isCallerAdmin: () -> (bool) query;
+  markNotificationRead: (notifId: text) -> (Result_1);
+  sendMessage: (recipientId: principal, encryptedContent: text, contentKey:
+   text, expiresInSeconds: int, fileAttachment: opt FileAttachment) ->
+   (Result);
+}
